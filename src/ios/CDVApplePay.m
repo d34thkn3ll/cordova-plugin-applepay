@@ -145,8 +145,12 @@
         NSString *label = [item objectForKey:@"label"];
 
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithDecimal:[[item objectForKey:@"amount"] decimalValue]];
-
-        PKPaymentSummaryItem *newItem = [PKPaymentSummaryItem summaryItemWithLabel:label amount:amount];
+        
+        PKPaymentSummaryItemType *type = [@"pending" isEqualToString:[item objectForKey:@"type"]]
+            ? PKPaymentSummaryItemTypePending
+            : PKPaymentSummaryItemTypeFinal;
+        
+        PKPaymentSummaryItem *newItem = [PKPaymentSummaryItem summaryItemWithLabel:label amount:amount type:type];
 
         [items addObject:newItem];
     }
