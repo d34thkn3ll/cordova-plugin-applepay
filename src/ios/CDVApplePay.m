@@ -146,9 +146,15 @@
 
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithDecimal:[[item objectForKey:@"amount"] decimalValue]];
         
-        PKPaymentSummaryItemType type = [@"pending" isEqualToString:[item objectForKey:@"type"]]
-            ? PKPaymentSummaryItemTypePending
-            : PKPaymentSummaryItemTypeFinal;
+        NSString *itemType = [item objectForKey:@"type"];
+        
+        PKPaymentSummaryItemType type;
+        
+        if ([itemType isEqualToString:@"pending"]) {
+            type = PKPaymentSummaryItemTypePending;
+        } else {
+            type = PKPaymentSummaryItemTypeFinal;
+        }
         
         PKPaymentSummaryItem *newItem = [PKPaymentSummaryItem summaryItemWithLabel:label amount:amount type:type];
 
